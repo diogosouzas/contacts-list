@@ -33,9 +33,8 @@ class UserListViewModel(
         }
 
         _statesObserver.value = Loading(true)
-        viewModelScope.launch(dispatcher.io() + coroutineExceptionHandler) {
-            val usersList = getAllUsersUseCase.executeAction(Unit)
-            _statesObserver.value = ShowAllUsersState(usersList)
+        viewModelScope.launch(dispatcher.main() + coroutineExceptionHandler) {
+            _statesObserver.value = ShowAllUsersState(getAllUsersUseCase.executeAction(Unit))
             _statesObserver.value = Loading(false)
         }
     }
